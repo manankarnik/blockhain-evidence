@@ -9,7 +9,7 @@ import path from "path";
 import fs from "fs";
 
 const __dirname = import.meta.dirname;
-const contract_address = "0xb31F54af92EC52a43dC6dbA9928E4A081301fC3E";
+const contract_address = "0xeA13DbC3d38D5B9E6d9eED40441445003c67eBBa";
 const helia = await createHelia();
 const ufs = unixfs(helia)
 const web3 = new Web3("http://127.0.0.1:7545");
@@ -51,16 +51,16 @@ app.get("/list", async (req, res) => {
               Home
             </a>
             <a
-              href="/download"
-              class="hover:text-gray-800 transition duration-200"
-            >
-              Download Evidence
-            </a>
-            <a
               href="/upload"
               class="hover:text-gray-800 transition duration-200"
             >
               Upload Evidence
+            </a>
+            <a
+              href="/download"
+              class="hover:text-gray-800 transition duration-200"
+            >
+              Download Evidence
             </a>
             <a
               href="/verify"
@@ -133,7 +133,8 @@ app.post("/upload", async (req, res) => {
     }
     const gasEstimate = await evidenceContract.methods.addEvidence(caseId, cid.toString(), name, description).estimateGas({ from: address });
     const result = await evidenceContract.methods.addEvidence(caseId, cid.toString(), name, description).send({ from: address, gas: gasEstimate });
-    res.send(`<script>alert("Evidence Uploaded successfully!\nCID: ${cid.toString()}");window.history.go(-1);</script>`);
+        console.log(result);
+    res.send(`<script>alert('Evidence Uploaded successfully!\\nCID: ${cid.toString()}');window.history.go(-1);</script>`);
 });
 
 app.post("/verify", async (req, res) => {
